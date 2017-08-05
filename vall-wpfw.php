@@ -2,7 +2,7 @@
 /*
 Plugin Name: Vallonic WordPress Framework
 Description: Maakt het leven van Vallonians makkelijker
-Version:     v0.0.1.3-alpha0.3.12
+Version:     v0.0.1.3-alpha0.3.13
 Author:      Vallonic
 Author URI:  http://www.vallonic.com
 */
@@ -14,5 +14,6 @@ if ( is_admin() ) {
 }
 
 require_once( 'inc/functions/shortcodes.php' );
+loadShortcodes();
 
 ?>
