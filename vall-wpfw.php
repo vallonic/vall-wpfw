@@ -13,12 +13,6 @@ if ( is_admin() ) {
     new VallonicWPFWGitHubPluginUpdater( __FILE__, 'vallonic', "vall-wpfw" );
 }
 
-function shortcodex(){
-  return "vallonic";
-}
+require_once( 'inc/functions/shortcodes.php' );
 
-add_shortcode( 'vall', 'shortcodex');
-
-// Shortcodes inladen
-require( 'inc/shortcodes/shortcodes.php' );
 ?>
