@@ -20,4 +20,7 @@ loadShortcodes();
 // Protected pages
 require_once( 'inc/functions/protectedpages.php' );
 
+// RSS feed Vallonic.com
+require_once( 'inc/functions/vallonicrss.admin.php' );
+
 ?>
