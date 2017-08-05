@@ -51,7 +51,7 @@ add_action( 'save_post', 'vallPageProtection_meta_save' );
 
 // Doorsturen als gebruiker op pagina is zonder ingelogd te zijn
 function redirectIfPageIsProtected() {
-  $mustBeLoggedIn = get_post_meta($post_id, 'mustBeLoggedIn', TRUE);
+  $mustBeLoggedIn = get_post_meta( get_the_ID(), 'mustBeLoggedIn', TRUE );
   if(is_single() && is_page() && $mustBeLoggedIn == 'yes' && !is_user_logged_in()) {
       $redirect = "/cd";
       wp_redirect($redirect);
