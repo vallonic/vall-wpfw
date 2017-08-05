@@ -3,7 +3,7 @@
 function miscShortcodes_vallonic(){
   return "http://vallonic.com";
 }
-add_shortcode( 'vallonic', 'miscShortcodes_vallonic' ); //Registreert de shortcode
+
 
 ## SHORTCODE: Groet op basis van tijdstip
 function miscShortcodes_goodMEN(){
@@ -21,5 +21,9 @@ function miscShortcodes_goodMEN(){
   }
   return $greet;
 }
-add_shortcode( 'vallonic-groet', 'miscShortcodes_goodMEN' ); //Registreert de shortcode
+function initShortcodesMisc() {
+  add_shortcode( 'vallonic-groet', 'miscShortcodes_goodMEN' ); //Registreert de shortcode: miscShortcodes_goodMEN
+  add_shortcode( 'vallonic', 'miscShortcodes_vallonic' ); //Registreert de shortcode: miscShortcodes_vallonic
+}
+add_action('init', 'initShortcodesMisc');
 ?>
