@@ -53,7 +53,7 @@ add_action( 'save_post', 'vallPageProtection_meta_save' );
 function redirectIfPageIsProtected() {
   $value = get_post_meta($post_id, 'mustBeLoggedIn', TRUE);
   if(is_single() || is_page() || $value == 'yes') {
-      $redirect = "/cd"
+      $redirect = "/cd";
       wp_redirect($redirect);
   }
 }
