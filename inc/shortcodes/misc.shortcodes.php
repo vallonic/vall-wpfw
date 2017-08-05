@@ -1,11 +1,11 @@
 <?php
 ## SHORTCODE: Vallonic.com url
-function miscShortcodeVallonic() {
+public function miscShortcodeVallonic() {
   return "http://vallonic.com";
 }
 
 
-function miscShortcodeGoodMEN() {
+public function miscShortcodeGoodMEN() {
   $Hour = date('G');
   $greet = "";
 
