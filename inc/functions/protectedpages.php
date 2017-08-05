@@ -13,8 +13,8 @@ function vallPageProtectionMeta_callback( $post ) {
  <p>
     <span class="vallPageProtection-row-title">Moeten gebruikers ingelogd zijn om deze pagina te mogen bekijken?</span>
     <div class="vallPageProtection-row-content">
-        <label for="featured-checkbox">
-            <input type="checkbox" name="featured-checkbox" id="featured-checkbox" value="yes" <?php if ( isset ( $vallPageProtection_stored_meta['mustBeLoggedIn'] ) ) checked( $vallPageProtection_stored_meta['mustBeLoggedIn'][0], 'yes' ); ?> />
+        <label for="mustBeLoggedInCheckbox">
+            <input type="checkbox" name="mustBeLoggedInCheckbox" id="mustBeLoggedInCheckbox" value="yes" <?php if ( isset ( $vallPageProtection_stored_meta['mustBeLoggedInCheckbox'] ) ) checked( $vallPageProtection_stored_meta['mustBeLoggedInCheckbox'][0], 'yes' ); ?> />
             Ja, alleen zichtbaar voor ingelogde gebruikers
         </label>
 
@@ -40,10 +40,10 @@ function vallPageProtection_meta_save( $post_id ) {
     }
 
 // Checks for input and saves - save checked as yes and unchecked at no
-if( isset( $_POST[ 'featured-checkbox' ] ) ) {
-    update_post_meta( $post_id, 'featured-checkbox', 'yes' );
+if( isset( $_POST[ 'mustBeLoggedInCheckbox' ] ) ) {
+    update_post_meta( $post_id, 'mustBeLoggedInCheckbox', 'yes' );
 } else {
-    update_post_meta( $post_id, 'featured-checkbox', 'no' );
+    update_post_meta( $post_id, 'mustBeLoggedInCheckbox', 'no' );
 }
 
 }
