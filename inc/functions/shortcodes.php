@@ -5,7 +5,7 @@ function vall() {
 }
 
 function vallGroet() {
-  date_default_timezone_set('Europa/Amsterdam');
+  date_default_timezone_set('Europe/Amsterdam');
   $Hour = date('G');
   $greet = "";
 
