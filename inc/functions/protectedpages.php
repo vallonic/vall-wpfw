@@ -1,51 +1,21 @@
 <?php
-/*function vallPageProtectionMetaBox() {
-  add_meta_box(
-    'wporg_box_id',           // Unique ID
-    'Custom Meta Box Title',  // Box titl
-    'wporg_custom_box_html',  // Content callback, must be of type callable
-    'page'                   // Post type
-        );
-    }
-}
-
-add_action('add_meta_boxes', 'vallPageProtectionMetaBox');
-function getRoles() {
-    global $wp_roles;
-    $all_roles = $wp_roles->roles;
-    return $all_roles;
-}
-
-function wporg_custom_box_html($post) { ?>
-  <label for="zichtbaarheid">Wie heeft toegang tot deze pagina?</label>
-  <select name="zichtbaarheid" id="wporg_field" class="postbox">
-    <option value="visibleToEveryone">Iedereen</option>
-    <option value="visibleToEveryone">Ingelogde gebruikers</option>
-  </select>
-<?php }
-*/
-
-
+// Nieuwe metabox maken
 function vallPageProtectionMeta() {
-    add_meta_box( 'vallPageProtectionMetaBox', 'Custom Meta Box Title', 'vallPageProtectionMeta_callback', 'page', 'normal', 'high' );
+    add_meta_box( 'vallPageProtectionMetaBox', 'VallFW — Beveiliging', 'vallPageProtectionMeta_callback', 'page', 'normal', 'high' );
 }
 add_action( 'add_meta_boxes', 'vallPageProtectionMeta' );
 
-/**
- * Outputs the content of the meta box
- */
-
+// De metabox vullen met content
 function vallPageProtectionMeta_callback( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'vallPageProtection_nonce' );
     $vallPageProtection_stored_meta = get_post_meta( $post->ID );
     ?>
-
  <p>
-    <span class="vallPageProtection-row-title">Test</span>
+    <span class="vallPageProtection-row-title">Moeten gebruikers ingelogd zijn om deze pagina te mogen bekijken?</span>
     <div class="vallPageProtection-row-content">
         <label for="featured-checkbox">
             <input type="checkbox" name="featured-checkbox" id="featured-checkbox" value="yes" <?php if ( isset ( $vallPageProtection_stored_meta['mustBeLoggedIn'] ) ) checked( $vallPageProtection_stored_meta['mustBeLoggedIn'][0], 'yes' ); ?> />
-            Featured Item
+            Ja, alleen zichtbaar voor ingelogde gebruikers
         </label>
 
     </div>
