@@ -14,5 +14,5 @@ if ( is_admin() ) {
 }
 
 // Shortcodes inladen
-require_once( 'inc/shortcodes/shortcodes.php' );
+require( 'inc/shortcodes/shortcodes.php' );
 ?>
