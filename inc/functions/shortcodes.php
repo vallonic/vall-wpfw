@@ -12,9 +12,9 @@ function vallGroet() {
     $greet = "Goedemorgen";
   } else if ( $Hour >= 12 && $Hour <= 17 ) {
     $greet = "Goedemiddag";
-  } else if ( $Hour >= 18 || $Hour <= 0 ) {
+  } else if ( $Hour >= 18 && $Hour <= 0 ) {
     $greet = "Goedeavond";
-  } else if ( $Hour >= 1 || $Hour <= 4) {
+  } else if ( $Hour >= 1 && $Hour <= 4) {
     $greet = "Goedenacht";
   }
   return $greet;
