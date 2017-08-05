@@ -13,8 +13,8 @@ function vallPageProtectionMeta_callback( $post ) {
  <p>
     <span class="vallPageProtection-row-title">Moeten gebruikers ingelogd zijn om deze pagina te mogen bekijken?</span>
     <div class="vallPageProtection-row-content">
-        <label for="mustBeLoggedInCheckbox">
-            <input type="checkbox" name="mustBeLoggedInCheckbox" id="mustBeLoggedInCheckbox" value="yes" <?php if ( isset ( $vallPageProtection_stored_meta['mustBeLoggedInCheckbox'] ) ) checked( $vallPageProtection_stored_meta['mustBeLoggedInCheckbox'][0], 'yes' ); ?> />
+        <label for="mustBeLoggedIn">
+            <input type="checkbox" name="mustBeLoggedIn" id="mustBeLoggedInCheckbox" value="yes" <?php if ( isset ( $vallPageProtection_stored_meta['mustBeLoggedIn'] ) ) checked( $vallPageProtection_stored_meta['mustBeLoggedIn'][0], 'yes' ); ?> />
             Ja, alleen zichtbaar voor ingelogde gebruikers
         </label>
 
@@ -40,12 +40,22 @@ function vallPageProtection_meta_save( $post_id ) {
     }
 
 // Checks for input and saves - save checked as yes and unchecked at no
-if( isset( $_POST[ 'mustBeLoggedInCheckbox' ] ) ) {
-    update_post_meta( $post_id, 'mustBeLoggedInCheckbox', 'yes' );
+if( isset( $_POST[ 'mustBeLoggedIn' ] ) ) {
+    update_post_meta( $post_id, 'mustBeLoggedIn', 'yes' );
 } else {
-    update_post_meta( $post_id, 'mustBeLoggedInCheckbox', 'no' );
+    update_post_meta( $post_id, 'mustBeLoggedIn', 'no' );
 }
 
 }
 add_action( 'save_post', 'vallPageProtection_meta_save' );
+
+// Doorsturen als gebruiker op pagina is zonder ingelogd te zijn
+function redirectIfPageIsProtected() {
+  $value = get_post_meta($post_id, 'mustBeLoggedIn', TRUE);
+  if(is_single() || is_page() || $value == 'yes') {
+      $redirect = "/cd"
+      wp_redirect($redirect);
+  }
+}
+
 ?>
