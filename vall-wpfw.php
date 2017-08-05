@@ -8,7 +8,7 @@ Author URI:  http://www.vallonic.com
 */
 
 // Updater class inladen
-require_once( 'updater.php' );
+require_once( 'inc/classes/updater.php' );
 if ( is_admin() ) {
     new VallonicWPFWGitHubPluginUpdater( __FILE__, 'vallonic', "vall-wpfw" );
 }
