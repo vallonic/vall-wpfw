@@ -239,3 +239,5 @@ class VallonicWPFWGitHubPluginUpdater {
         return $result;
     }
 }
+
+?>
