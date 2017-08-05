@@ -10,9 +10,9 @@ function vallGroet() {
 
   if ( $Hour >= 5 && $Hour <= 11 ) {
     $greet = "Goedemorgen";
-  } else if ( $Hour >= 12 && $Hour <= 18 ) {
+  } else if ( $Hour >= 12 && $Hour <= 17 ) {
     $greet = "Goedemiddag";
-  } else if ( $Hour >= 19 || $Hour <= 0 ) {
+  } else if ( $Hour >= 18 || $Hour <= 0 ) {
     $greet = "Goedeavond";
   } else if ( $Hour >= 1 || $Hour <= 4) {
     $greet = "Goedenacht";
@@ -20,7 +20,7 @@ function vallGroet() {
   return $greet;
 }
 
-// Shortcode nu registreren en daarna inladen
+// Shortcode nu registreren
 function loadShortcodes() {
   add_shortcode( 'vall-groet', 'vallGroet' );
   add_shortcode( 'vall', 'vall' );
