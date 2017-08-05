@@ -35,7 +35,7 @@ add_action( 'add_meta_boxes', 'vallPageProtectionMeta' );
  * Outputs the content of the meta box
  */
 
-function vallPageProtectionMetacallback( $post ) {
+function vallPageProtectionMeta_callback( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'vallPageProtection_nonce' );
     $vallPageProtection_stored_meta = get_post_meta( $post->ID );
     ?>
