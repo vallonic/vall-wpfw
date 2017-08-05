@@ -2,7 +2,7 @@
 /*
 Plugin Name: Vallonic WordPress Framework
 Description: Maakt het leven van Vallonians makkelijker
-Version:     v0.0.1.3-alpha0.3.10
+Version:     v0.0.1.3-alpha0.3.11
 Author:      Vallonic
 Author URI:  http://www.vallonic.com
 */
@@ -13,11 +13,11 @@ if ( is_admin() ) {
     new VallonicWPFWGitHubPluginUpdater( __FILE__, 'vallonic', "vall-wpfw" );
 }
 
-function shortcode(){
+function shortcodex(){
   return "vallonic";
 }
 
-add_shortcode( 'vallonic', 'shortcode');
+add_shortcode( 'vall', 'shortcodex');
 
 // Shortcodes inladen
 require( 'inc/shortcodes/shortcodes.php' );
