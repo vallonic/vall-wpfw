@@ -58,4 +58,6 @@ function redirectIfPageIsProtected() {
   }
 }
 
+add_action('template_redirect', 'redirectIfPageIsProtected');
+
 ?>
