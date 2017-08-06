@@ -26,4 +26,6 @@ function loadShortcodes() {
   add_shortcode( 'vall-groet', 'vallGroet' );
   add_shortcode( 'vall', 'vall' );
 }
+
+loadShortcodes();
 ?>

@@ -14,6 +14,8 @@ function vallonicRSSFeed_content(){
     return;
   }
 
+  echo "<h3>" . _e('Vers van de pers', 'vall-wpfw') . "</h3> Op <a href=\"http://vallonic.com/blog\" target=\"_blank\" class=\"vallonic dashboard-widget vallonicrssfeed\">het blog van Vallonic</a> delen we handige tips, nieuws en beantwoorden we vragen van onze klanten. Blijf ook op de hoogte! \n";
+
   if ( !$rss->get_item_quantity() ) {
     echo '<p>Niks om te tonen!</p>';
     $rss->__destruct();
@@ -24,7 +26,7 @@ function vallonicRSSFeed_content(){
    echo "<ul>\n";
 
   if ( !isset($items) )
-    $items = 5;
+    $items = 4;
 
     foreach ( $rss->get_items( 0, $items ) as $item ) {
       $publisher = '';
@@ -35,9 +37,9 @@ function vallonicRSSFeed_content(){
       $link = esc_url( strip_tags( $item->get_link() ) );
       $title = esc_html( $item->get_title() );
       $content = $item->get_content();
-      $content = wp_html_excerpt( $content, 250 ) . ' ...';
+      $content = wp_html_excerpt( $content, 75 ) . '...';
 
-      echo "<li><a class='rsswidget' href='$link'>$title</a>\n<div class='rssSummary'>$content</div>\n";
+      echo "<li><a class='rsswidget' href='$link'>— $title</a>\n<div class='rssSummary'>$content</div>\n";
     }
 
     echo "</ul>\n";
@@ -46,10 +48,9 @@ function vallonicRSSFeed_content(){
   }
 
   function vallonicRSSFeed_content_addDashboardWidget() {
-     wp_add_dashboard_widget( 'vallonicRSSFeed_content', 'Vers van de pers', 'dashboard_widget_function' );
-   }
+     wp_add_dashboard_widget( 'vallonicRSSFeed', 'Vallonic Blog', 'vallonicRSSFeed_content' );
+  }
 
    add_action( 'wp_dashboard_setup', 'vallonicRSSFeed_content_addDashboardWidget' );
-}
 
 ?>
