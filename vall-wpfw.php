@@ -2,7 +2,7 @@
 /*
 Plugin Name: Vallonic WordPress Framework
 Description: Maakt het leven van Vallonians makkelijker
-Version:     v0.0.2.1
+Version:     v0.0.3
 Author:      Vallonic
 Author URI:  http://www.vallonic.com
 Text Domain: vall-wpfw

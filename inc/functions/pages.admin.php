@@ -7,7 +7,7 @@ function vall_wpfw_createAdminMenu() {
 	//create new top-level menu
 	add_menu_page('My Cool Plugin Settings', 'Vallonic', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo' , 'dashicons-smiley');
   add_submenu_page('vall-wpfw-general', 'Vallonic Wordpress Framework — Informatie', 'Informatie', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo');
-  add_submenu_page('vall-wpfw-general', 'Subpagina tekst 1', 'Subpagina tekst 2', 'administrator', 'vall-wpfw-settingsgeneral', 'vall_wpfw_createAdminPage_settingsGeneral');
+  //add_submenu_page('vall-wpfw-general', 'Subpagina tekst 1', 'Subpagina tekst 2', 'administrator', 'vall-wpfw-settingsgeneral', 'vall_wpfw_createAdminPage_settingsGeneral');
 
 	//call register settings function
 	add_action( 'admin_init', 'vall_wpfw_registerAdminSettings' );
