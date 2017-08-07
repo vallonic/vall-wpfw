@@ -26,6 +26,9 @@ function loadShortcodes() {
   add_shortcode( 'vall-groet', 'vallGroet' );
   add_shortcode( 'vall', 'vall' );
 }
+// Functie toevoegen indien widget geactiveerd is
+if (get_option('vall_wpfw_option_general_toggle_shortcodes') == "true") {
+ loadShortcodes();
+}
 
-loadShortcodes();
 ?>
