@@ -5,23 +5,18 @@ add_action('admin_menu', 'vall_wpfw_createAdminMenu');
 function vall_wpfw_createAdminMenu() {
 
 	//create new top-level menu
-	add_menu_page('My Cool Plugin Settings', 'Vallonic', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo' , 'dashicons-smiley');
+	add_menu_page('vall-wpfw-general', 'Vallonic', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo' , 'dashicons-smiley');
   add_submenu_page('vall-wpfw-general', 'Vallonic Wordpress Framework — Informatie', 'Informatie', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo');
-  //add_submenu_page('vall-wpfw-general', 'Subpagina tekst 1', 'Subpagina tekst 2', 'administrator', 'vall-wpfw-settingsgeneral', 'vall_wpfw_createAdminPage_settingsGeneral');
+  add_submenu_page('vall-wpfw-general', 'Vallonic Wordpress Framework — Algemene Instellingen', 'Algemene Instellingen', 'administrator', 'vall-wpfw-settingsgeneral', 'vall_wpfw_createAdminPage_settingsGeneral');
 
-	//call register settings function
-	add_action( 'admin_init', 'vall_wpfw_registerAdminSettings' );
 }
 
-function vall_wpfw_registerAdminSettings() {
-	//register our settings
-	register_setting( 'my-cool-plugin-settings-group', 'new_option_name' );
-	register_setting( 'my-cool-plugin-settings-group', 'some_other_option' );
-	register_setting( 'my-cool-plugin-settings-group', 'option_etc' );
-}
+##########################################
+## Dashboard pagina: Algemene informatie
 
 function vall_wpfw_createAdminPage_generalInfo() {
   global $plugin_data;
+	$siteurl = site_url();
 ?>
 <div class="wrap">
   <h1><?php echo $plugin_data['Name']; ?></h1>
@@ -31,38 +26,89 @@ function vall_wpfw_createAdminPage_generalInfo() {
     </h1>
     <?php echo _e('Plugin versie', 'vall-wpfw') . " " . $plugin_data['Version']; ?> | <a class="vall dashboard-link-simpel" href="<?php echo $plugin_data['url']; ?> "><?php _e('Naar de website van Vallonic', 'vall-wpfw'); ?></a>
     <hr class="vall dashboard-hr" />
+		<?php
+			if (strpos($siteurl, 'vallonic.') !== false) {
+    		echo '<b>Deze website is eigendom van Vallonic —> Speciale functies staan aan <hr class="vall dashboard-hr" />';
+			}
+		?>
   </div>
 </div>
 <?php }
 
-function vall_wpfw_createAdminPage_settingsGeneral() {
-?>
-<div class="wrap">
-<h1>Vallonic WordPress Framework</h1>
+##########################################
+## Dashboard pagina: Algemene Instellingen
 
-<form method="post" action="options.php">
-    <?php settings_fields( 'my-cool-plugin-settings-group' ); ?>
-    <?php do_settings_sections( 'my-cool-plugin-settings-group' ); ?>
-    <table class="form-table">
-        <tr valign="top">
-        <th scope="row">New Option Name</th>
-        <td><input type="text" name="new_option_name" value="<?php echo esc_attr( get_option('new_option_name') ); ?>" /></td>
-        </tr>
+function vall_wpfw_registerSettings_settingsGeneral() {
+	//register our settings
+	register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_admin_rss_module' );
+  register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_pageprotection_module' );
+  register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_shortcodes' );
+}
+add_action( 'admin_init', 'vall_wpfw_registerSettings_settingsGeneral' );
 
-        <tr valign="top">
-        <th scope="row">Some Other Option</th>
-        <td><input type="text" name="some_other_option" value="<?php echo esc_attr( get_option('some_other_option') ); ?>" /></td>
-        </tr>
 
-        <tr valign="top">
-        <th scope="row">Options, Etc.</th>
-        <td><input type="text" name="option_etc" value="<?php echo esc_attr( get_option('option_etc') ); ?>" /></td>
-        </tr>
-    </table>
 
-    <?php submit_button(); ?>
-
-</form>
-</div>
+function vall_wpfw_createAdminPage_settingsGeneral() {?>
+	<div class="wrap vall_wpfw settings-page-wrapper">
+  	<img class="vallonic-logo"src="http://dab.s1.vallonic.com/vallonic_logo/logo_vallonic-green.png" />
+  	<h1>Vallonic WordPress Framework</h1>
+  	<div class="" style="padding-top: 15px;">
+    	<div class="settings-container">
+      	<form method="post" action="options.php">
+        	<?php settings_fields( 'vall_wpfw_settingsGroup_settingsGeneral' ); ?>
+        	<?php do_settings_sections( 'vall_wpfw_settingsGroup_settingsGeneral' ); ?>
+        	<table class="settings-table">
+          	<tbody>
+            	<tr>
+              	<th class="header" scope="row" colspan="2">
+                <h3><?php _e('Algemene Instellingen', 'vall-wpfw'); ?></h3>
+              	</th>
+            	</tr>
+            	<tr>
+              	<th scope="row" class="first">
+                	<span class="type"><?php _e('Dashboard widget', 'vall-wpfw'); ?>:</span> <?php _e('RSS-feed van', 'vall-wpfw'); ?> Vallonic.com
+              	</th>
+              	<td>
+                	<input name="vall_wpfw_option_general_toggle_admin_rss_module" id="vall_wpfw_option_general_toggle_admin_rss_module" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_admin_rss_module' ) ); ?> />
+                	<label for="vall_wpfw_option_general_toggle_admin_rss_module">
+                  	<?php _e('Activeer dashboard widget', 'vall-wpfw'); ?>
+                	</label>
+              	</td>
+            	</tr>
+            <tr>
+              <th scope="row" class="first">
+              <span class="type"><?php _e('Module','vall-wpfw'); ?>:</span> <?php _e('pagina doorsturen indien niet ingelogd','vall-wpfw'); ?>
+              </th>
+              <td>
+                <input name="vall_wpfw_option_general_toggle_pageprotection_module" id="vall_wpfw_option_general_toggle_pageprotection_module" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_pageprotection_module' ) ); ?> />
+                <label for="vall_wpfw_option_general_toggle_pageprotection_module">
+                  <?php _e('Activeer module', 'vall-wpfw'); ?>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="first">
+                <span class="type">Module:</span> shortcodes
+              </th>
+              <td>
+                <input name="vall_wpfw_option_general_toggle_shortcodes" id="vall_wpfw_option_general_toggle_shortcodes" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_shortcodes' ) ); ?> />
+                <label for="vall_wpfw_option_general_toggle_shortcodes">
+                  <?php _e('Activeer module', 'vall-wpfw'); ?>
+                </label>
+                <?php if (!get_option('vall_wpfw_option_general_toggle_shortcodes') == "true") { ?>
+                  <ul>
+                    <?php _e('Staat nu uit. Voegt de volgende shortcodes toe:', 'vall-wpfw'); ?>
+                  <li><code>[vall-groet]</code> — <?php _e('Begroeting op basis van tijdstip', 'vall-wpfw'); ?></li>
+                </ul>
+              <?php } ?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <?php submit_button(); ?>
+      	</form>
+    	</div>
+  	</div>
+	</div>
 
 <?php } ?>
