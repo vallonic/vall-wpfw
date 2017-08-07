@@ -1,0 +1,87 @@
+.vall_wpfw.settings-page-wrapper .vallonic-logo {
+  margin-top: 20px;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container {
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr {
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr th {
+  background: none repeat scroll 0 0 #fff;
+  padding: 10px 20px;
+  text-align: left;
+  border-left: 1px solid #DFDFDF;
+  /*border-top: 1px solid #DFDFDF;*/
+  border-right: 1px solid #DFDFDF;
+  border-bottom: 1px solid #DFDFDF;
+  font-weight: 400
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table .type {
+  font-weight: 700;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr td {
+  padding: 10px 20px;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr:not(:last-child) {
+  border-bottom: none;
+}
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr:not(:last-child) th, .vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr:not(:last-child) td {
+  border-bottom: none !important;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr .header {
+  background: none repeat scroll 0 0 #F5F5F5;
+  padding: 10px 20px;
+  text-align: left;
+  border-left: 1px solid #DFDFDF;
+  border-top: 1px solid #DFDFDF;
+  border-right: 1px solid #DFDFDF;
+  border-bottom: 1px solid #DFDFDF;
+}
+
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr th:not(.header):first-child {
+  width: 15%;
+  border-right: none;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr td, .vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr th {
+  vertical-align: top;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr td:last-child {
+  border-right: 1px solid #DFDFDF;
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr th h3 {
+  margin: 0;
+  font-size: 18px;;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.vall_wpfw.settings-page-wrapper .submit .button.button-primary {
+  text-shadow: none;
+  background: #39b79f;
+  border-color: #31a572;
+  box-shadow: 0 1px 0 #31a572;
+}
+
+.vall_wpfw.settings-page-wrapper .submit .button.button-primary:active {
+  border-color: #31a572;
+  -webkit-box-shadow: inset 0 2px 0 #31a572;
+  box-shadow: inset 0 2px 0 #31a572;
+}
