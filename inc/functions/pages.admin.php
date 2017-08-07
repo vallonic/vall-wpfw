@@ -5,10 +5,9 @@ add_action('admin_menu', 'vall_wpfw_createAdminMenu');
 function vall_wpfw_createAdminMenu() {
 
 	//create new top-level menu
-	add_menu_page('vall-wpfw-general', 'Vallonic', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo' , 'dashicons-smiley');
+	add_menu_page('vallonic-wpf', 'Vallonic', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo' , 'dashicons-smiley');
   add_submenu_page('vall-wpfw-general', 'Vallonic Wordpress Framework — Informatie', 'Informatie', 'administrator', 'vall-wpfw-general', 'vall_wpfw_createAdminPage_generalInfo');
   add_submenu_page('vall-wpfw-general', 'Vallonic Wordpress Framework — Algemene Instellingen', 'Algemene Instellingen', 'administrator', 'vall-wpfw-settingsgeneral', 'vall_wpfw_createAdminPage_settingsGeneral');
-
 }
 
 ##########################################
@@ -16,7 +15,6 @@ function vall_wpfw_createAdminMenu() {
 
 function vall_wpfw_createAdminPage_generalInfo() {
   global $plugin_data;
-	$siteurl = site_url();
 ?>
 <div class="wrap">
   <h1><?php echo $plugin_data['Name']; ?></h1>
@@ -27,7 +25,7 @@ function vall_wpfw_createAdminPage_generalInfo() {
     <?php echo _e('Plugin versie', 'vall-wpfw') . " " . $plugin_data['Version']; ?> | <a class="vall dashboard-link-simpel" href="<?php echo $plugin_data['url']; ?> "><?php _e('Naar de website van Vallonic', 'vall-wpfw'); ?></a>
     <hr class="vall dashboard-hr" />
 		<?php
-			if (strpos($siteurl, 'vallonic.') !== false) {
+			if (vall_wpfw_siteChecker() == 'true') {
     		echo '<b>Deze website is eigendom van Vallonic —> Speciale functies staan aan <hr class="vall dashboard-hr" />';
 			}
 		?>
@@ -43,12 +41,15 @@ function vall_wpfw_registerSettings_settingsGeneral() {
 	register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_admin_rss_module' );
   register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_pageprotection_module' );
   register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_shortcodes' );
+	register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_wp_wpdashboardwidgets' );
 }
 add_action( 'admin_init', 'vall_wpfw_registerSettings_settingsGeneral' );
 
 
 
-function vall_wpfw_createAdminPage_settingsGeneral() {?>
+function vall_wpfw_createAdminPage_settingsGeneral() { ?>
+
+
 	<div class="wrap vall_wpfw settings-page-wrapper">
   	<img class="vallonic-logo"src="http://dab.s1.vallonic.com/vallonic_logo/logo_vallonic-green.png" />
   	<h1>Vallonic WordPress Framework</h1>
@@ -57,6 +58,32 @@ function vall_wpfw_createAdminPage_settingsGeneral() {?>
       	<form method="post" action="options.php">
         	<?php settings_fields( 'vall_wpfw_settingsGroup_settingsGeneral' ); ?>
         	<?php do_settings_sections( 'vall_wpfw_settingsGroup_settingsGeneral' ); ?>
+					<?php if (vall_wpfw_siteChecker() == "true") {
+						// Volgende alleen tonen indien er "vallonic." in het domeinnaam staat ?>
+						<table class="settings-table">
+							<tbody>
+								<tr>
+									<th class="header" scope="row" colspan="2">
+									<h3><?php _e('Instellingen Alleen voor Vallonic.nl/.nl ', 'vall-wpfw'); ?></h3>
+									</th>
+								</tr>
+							<tr>
+								<th scope="row" class="first">
+								<span class="type"><?php _e('Module','vall-wpfw'); ?>:</span> <?php _e('ook kunnen doorsturen naar CD indien niet ingelogd','vall-wpfw'); ?>
+								</th>
+								<td>
+									<input name="vall_wpfw_option_general_toggle_pageprotection_module_redirecttocd" id="vall_wpfw_option_general_toggle_pageprotection_module_redirecttocd" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_pageprotection_module' ) ); ?> />
+									<label for="vall_wpfw_option_general_toggle_pageprotection_module_redirecttocd">
+										<?php _e('Inschakelen', 'vall-wpfw'); ?>
+									</label>
+								</td>
+							</tr>
+						</tbody>
+						</table>
+
+						<?php }
+						// Het volgende altijd tonen ?>
+
         	<table class="settings-table">
           	<tbody>
             	<tr>
@@ -71,7 +98,7 @@ function vall_wpfw_createAdminPage_settingsGeneral() {?>
               	<td>
                 	<input name="vall_wpfw_option_general_toggle_admin_rss_module" id="vall_wpfw_option_general_toggle_admin_rss_module" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_admin_rss_module' ) ); ?> />
                 	<label for="vall_wpfw_option_general_toggle_admin_rss_module">
-                  	<?php _e('Activeer dashboard widget', 'vall-wpfw'); ?>
+                  	<?php _e('Inschakelen', 'vall-wpfw'); ?>
                 	</label>
               	</td>
             	</tr>
@@ -82,7 +109,7 @@ function vall_wpfw_createAdminPage_settingsGeneral() {?>
               <td>
                 <input name="vall_wpfw_option_general_toggle_pageprotection_module" id="vall_wpfw_option_general_toggle_pageprotection_module" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_pageprotection_module' ) ); ?> />
                 <label for="vall_wpfw_option_general_toggle_pageprotection_module">
-                  <?php _e('Activeer module', 'vall-wpfw'); ?>
+                  <?php _e('Inschakelen', 'vall-wpfw'); ?>
                 </label>
               </td>
             </tr>
@@ -93,7 +120,7 @@ function vall_wpfw_createAdminPage_settingsGeneral() {?>
               <td>
                 <input name="vall_wpfw_option_general_toggle_shortcodes" id="vall_wpfw_option_general_toggle_shortcodes" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_shortcodes' ) ); ?> />
                 <label for="vall_wpfw_option_general_toggle_shortcodes">
-                  <?php _e('Activeer module', 'vall-wpfw'); ?>
+                  <?php _e('Inschakelen', 'vall-wpfw'); ?>
                 </label>
                 <?php if (!get_option('vall_wpfw_option_general_toggle_shortcodes') == "true") { ?>
                   <ul>
@@ -103,6 +130,17 @@ function vall_wpfw_createAdminPage_settingsGeneral() {?>
               <?php } ?>
               </td>
             </tr>
+						<tr>
+              <th scope="row" class="first">
+              <span class="type"><?php _e('Module','vall-wpfw'); ?>:</span> <?php _e('Standaard WordPress dashboard widgets deactiveren','vall-wpfw'); ?>
+              </th>
+              <td>
+                <input name="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets" id="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_pageprotection_module' ) ); ?> />
+                <label for="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets">
+                  <?php _e('Inschakelen', 'vall-wpfw'); ?>
+                </label>
+              </td>
+            </tr>
           </tbody>
         </table>
         <?php submit_button(); ?>
@@ -110,5 +148,7 @@ function vall_wpfw_createAdminPage_settingsGeneral() {?>
     	</div>
   	</div>
 	</div>
+
+
 
 <?php } ?>
