@@ -135,7 +135,7 @@ function vall_wpfw_createAdminPage_settingsGeneral() { ?>
               <span class="type"><?php _e('Module','vall-wpfw'); ?>:</span> <?php _e('Standaard WordPress dashboard widgets deactiveren','vall-wpfw'); ?>
               </th>
               <td>
-                <input name="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets" id="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_pageprotection_module' ) ); ?> />
+                <input name="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets" id="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets" type="checkbox" value="true" <?php checked( 'true', get_option( 'vall_wpfw_option_general_toggle_wp_wpdashboardwidgets' ) ); ?> />
                 <label for="vall_wpfw_option_general_toggle_wp_wpdashboardwidgets">
                   <?php _e('Inschakelen', 'vall-wpfw'); ?>
                 </label>
