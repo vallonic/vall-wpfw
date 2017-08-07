@@ -10,6 +10,7 @@ Text Domain: vall-wpfw
 if ( is_admin() ) {
   $plugin_data = get_plugin_data( __FILE__ );
   $plugin_path = plugin_dir_path( __FILE__ );
+  $plugin_url = plugin_dir_url( __FILE__ );
 }
 
 // Updater class inladen
