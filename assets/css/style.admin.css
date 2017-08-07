@@ -8,6 +8,7 @@
 .vall_wpfw.settings-page-wrapper .settings-container .settings-table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
 .vall_wpfw.settings-page-wrapper .settings-container .settings-table tbody tr {
@@ -84,4 +85,12 @@
   border-color: #31a572;
   -webkit-box-shadow: inset 0 2px 0 #31a572;
   box-shadow: inset 0 2px 0 #31a572;
+}
+
+#wp-version-message {
+  display: none;
+}
+
+.wrap .frash-notice.notice {
+    display: none !important;
 }
