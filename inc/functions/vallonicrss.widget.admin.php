@@ -51,6 +51,8 @@ function vallonicRSSFeed_content(){
      wp_add_dashboard_widget( 'vallonicRSSFeed', 'Vallonic Blog', 'vallonicRSSFeed_content' );
   }
 
+  // Functie toevoegen indien widget geactiveerd is
+  if (get_option('vall_wpfw_option_general_toggle_admin_rss_module') == "true") {
    add_action( 'wp_dashboard_setup', 'vallonicRSSFeed_content_addDashboardWidget' );
-
+  }
 ?>
