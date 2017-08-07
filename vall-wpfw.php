@@ -2,18 +2,14 @@
 /*
 Plugin Name: Vallonic WordPress Framework
 Description: Maakt het leven van Vallonians makkelijker
-Version:     v0.0.5
+Version:     v0.0.5.1
 Author:      Vallonic
 Author URI:  http://www.vallonic.com
 Text Domain: vall-wpfw
 */
 
 if (is_admin()) {
-  if (!function_exists('get_plugin_data')) {
-    // Voor het geval dat er iets fout zit en deze functie een WSOD geeft
-    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-  }
-
+  require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
   $plugin_data = get_plugin_data( __FILE__ );
   $plugin_path = plugin_dir_path( __FILE__ );
   $plugin_url = plugin_dir_url( __FILE__ );
