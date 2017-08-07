@@ -11,7 +11,7 @@ function vall_wpfw_disableWPDashboardWidgets() {
   unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
   unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
 }
-if (get_option('vall_wpfw_option_general_toggle_wp_wpdashboardwidgets') == "false") {
+if (get_option('vall_wpfw_option_general_toggle_wp_wpdashboardwidgets') == "true") {
  add_action('wp_dashboard_setup', 'vall_wpfw_disableWPDashboardWidgets' );
 }
 
