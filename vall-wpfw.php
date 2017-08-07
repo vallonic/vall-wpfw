@@ -2,15 +2,22 @@
 /*
 Plugin Name: Vallonic WordPress Framework
 Description: Maakt het leven van Vallonians makkelijker
-Version:     v0.0.4
+Version:     v0.0.5
 Author:      Vallonic
 Author URI:  http://www.vallonic.com
 Text Domain: vall-wpfw
 */
-if ( is_admin() ) {
+
+if (is_admin()) {
+  if (!function_exists('get_plugin_data')) {
+    // Voor het geval dat er iets fout zit en deze functie een WSOD geeft
+    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+  }
+
   $plugin_data = get_plugin_data( __FILE__ );
   $plugin_path = plugin_dir_path( __FILE__ );
   $plugin_url = plugin_dir_url( __FILE__ );
+  $vallwpfw = plugin_dir_path( __FILE__ );
 }
 
 // Updater class inladen
@@ -29,20 +36,4 @@ add_action( 'plugins_loaded', 'vallwpfw_load_languages' );
 foreach ( glob( plugin_dir_path( __FILE__ ) . "inc/functions/*.php" ) as $file ) {
     include_once $file;
 }
-
-/*// Shortcodes
-require_once( 'inc/functions/shortcodes.module.php' );
-
-// Protected pages
-require_once( 'inc/functions/protectedpages.module.php' );
-
-// RSS feed Vallonic.com
-require_once( 'inc/functions/vallonicrss.widget.admin.php' );
-
-// Admin opties
-require_once( 'inc/functions/pages.admin.php' );
-
-// CSS
-require_once( 'inc/functions/loadcss.module.admin.php' );*/
-
 ?>
