@@ -45,7 +45,10 @@ function vallPageProtection_html($post) {
     <label for="vallPageProtection_redirectTo"><?php _e( 'Doorsturen naar', 'vallPageProtection' ); ?></label><br>
 		<select name="vallPageProtection_redirectTo" id="vallPageProtection_redirectTo">
 			<option <?php echo (vallPageProtection_get_meta( 'vallPageProtection_redirectTo' ) === $homepageInt ) ? 'selected' : '' ?> value="<?php echo $homepageInt; ?>"><?php echo $homepageInt; ?></option>
-			<option <?php echo (vallPageProtection_get_meta( 'vallPageProtection_redirectTo' ) === $clntDshInt ) ? 'selected' : '' ?> value="<?php echo $clntDshInt; ?>"><?php echo $clntDshInt; ?></option>
+			<?php if (vall_wpfw_siteChecker() == 'true'){
+				// Alleen mogelijkheid tot doorsturen geven naar CD als site door de check komt ?>
+				<option <?php echo (vallPageProtection_get_meta( 'vallPageProtection_redirectTo' ) === $clntDshInt ) ? 'selected' : '' ?> value="<?php echo $clntDshInt; ?>"><?php echo $clntDshInt; ?></option>
+			<?php } ?>
 		</select>
 	</p><?php
 }
