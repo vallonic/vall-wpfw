@@ -16,11 +16,12 @@ function vallPageProtection_get_meta( $value ) {
 }
 
 function vallPageProtection_add_meta_box() {
+	$post_types = array ( 'page', 'epkb_post_type_1' );
 	add_meta_box(
 		'vallPageProtection-titel-van-de-doos',
 		__( 'Vallonic WPFW: Pagina doorsturen', 'vall-wpfw' ),
 		'vallPageProtection_html',
-		'page',
+		$post_types,
 		'normal',
 		'default'
 	);
@@ -90,6 +91,10 @@ function redirectIfPageIsProtected() {
   }
 }
 
-add_action('template_redirect', 'redirectIfPageIsProtected');
+// Functie toevoegen indien widget geactiveerd is
+if (get_option('vall_wpfw_option_general_toggle_pageprotection_module') == "true") {
+ add_action('template_redirect', 'redirectIfPageIsProtected');
+}
+
 
 ?>
