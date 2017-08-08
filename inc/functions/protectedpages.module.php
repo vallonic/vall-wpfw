@@ -80,7 +80,7 @@ function redirectIfPageIsProtected() {
   global $clntDshInt;
   global $homepageInt;
 
-  if (is_Page() && $var1 == "true" && !is_user_logged_in()) {
+  if (is_Page() && !is_404() && $var1 == "true" && !is_user_logged_in()) {
   if ($var2 == $homepageInt /*|| $var2 == "Homepagina"*/) {
       $targetURL = site_url();
       wp_redirect($targetURL);
@@ -95,9 +95,14 @@ function redirectIfPageIsProtected() {
 }
 
 // Functie toevoegen indien widget geactiveerd is
-if (get_option('vall_wpfw_option_general_toggle_pageprotection_module') == "true") {
+if (get_option('vall_wpfw_option_general_toggle_pageprotection_module') == "true" && !is_404()) {
  add_action('template_redirect', 'redirectIfPageIsProtected');
 }
+
+if ( is_404() ) {
+    // add search form so that users can search other posts
+}
+
 
 
 ?>
