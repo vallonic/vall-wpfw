@@ -117,3 +117,8 @@ input[type="checkbox"]:checked::before {
   /* CodeMirror: randje om textarea */
     border: 1px #DFDFDF solid;
 }
+
+#wp-admin-bar-wp-logo {
+  /* Logo van WP verbergen in dashboard toolbar */
+  display: none;
+}
