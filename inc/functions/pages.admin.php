@@ -10,8 +10,9 @@ function vall_wpfw_createAdminMenu() {
   add_submenu_page('vall-wpfw-general', 'Vallonic Wordpress Framework — Algemene Instellingen', 'Algemene Instellingen', 'administrator', 'vall-wpfw-settingsgeneral', 'vall_wpfw_createAdminPage_settingsGeneral');
 }
 
-##########################################
-## Dashboard pagina: Algemene informatie
+/***********
+ Infopagina
+ **********/
 
 function vall_wpfw_createAdminPage_generalInfo() {
   global $plugin_data;
@@ -33,22 +34,26 @@ function vall_wpfw_createAdminPage_generalInfo() {
 </div>
 <?php }
 
-##########################################
-## Dashboard pagina: Algemene Instellingen
+/*********************
+ Algemene instellingen
+ *********************/
 
 function vall_wpfw_registerSettings_settingsGeneral() {
-	//register our settings
+	// Eerst alle instellingen registreren
 	register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_admin_rss_module' );
   register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_pageprotection_module' );
   register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_shortcodes' );
 	register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_toggle_wp_wpdashboardwidgets' );
+	register_setting( 'vall_wpfw_settingsGroup_settingsGeneral', 'vall_wpfw_option_general_injectcustomcodeheader' );
 }
 add_action( 'admin_init', 'vall_wpfw_registerSettings_settingsGeneral' );
 
 
 
-function vall_wpfw_createAdminPage_settingsGeneral() { ?>
-
+function vall_wpfw_createAdminPage_settingsGeneral() {
+	// CodeMirror inladen
+	add_action('admin_head', 'vall_wpfw_loadCodeMirror');
+	?>
 
 	<div class="wrap vall_wpfw settings-page-wrapper">
   	<img class="vallonic-logo"src="http://dab.s1.vallonic.com/vallonic_logo/logo_vallonic-green.png" />
@@ -143,12 +148,33 @@ function vall_wpfw_createAdminPage_settingsGeneral() { ?>
             </tr>
           </tbody>
         </table>
+
+				<table class="settings-table">
+					<tbody>
+						<tr>
+							<th class="header" scope="row" colspan="2">
+							<h3><?php _e('Custom Code', 'vall-wpfw'); ?></h3>
+							</th>
+						</tr>
+						<tr>
+							<th scope="row" class="first">
+								<span class="type"><?php _e('Eigen code', 'vall-wpfw'); ?>:</span> <?php _e('Front-end code tussen <code>&lt;head&gt</code> en <code>&lt;/head&gt</code>', 'vall-wpfw'); ?>
+								<p>
+									Let op: zorg dat code beperkt blijft tot het inladen extra assets, stijlregels en scripts
+								</p>
+							</th>
+							<td>
+								<textarea class="customcode" id='vall_wpfw_option_general_injectcustomcodeheader customcode' name='vall_wpfw_option_general_injectcustomcodeheader' rows='7' cols='50' type='textarea'><?php echo get_option('vall_wpfw_option_general_injectcustomcodeheader'); ?></textarea>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
         <?php submit_button(); ?>
+
       	</form>
     	</div>
   	</div>
 	</div>
-
-
 
 <?php } ?>
