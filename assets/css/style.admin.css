@@ -1,3 +1,6 @@
+/**********************
+    Settings page    */
+
 .vall_wpfw.settings-page-wrapper .vallonic-logo {
   margin-top: 20px;
 }
@@ -74,23 +77,43 @@
   line-height: 1.4;
 }
 
-.vall_wpfw.settings-page-wrapper .submit .button.button-primary {
+.vall_wpfw.settings-page-wrapper .settings-container .settings-table tr td .customcode {
+  width: 50%;
+}
+
+/**********************
+Dashboard customizen */
+.button.button-primary, .vall_wpfw.settings-page-wrapper .submit .button.button-primary {
+  /* Button-kleuren aanpassen */
   text-shadow: none;
   background: #39b79f;
   border-color: #31a572;
   box-shadow: 0 1px 0 #31a572;
 }
 
-.vall_wpfw.settings-page-wrapper .submit .button.button-primary:active {
+.button.button-primary:active, .vall_wpfw.settings-page-wrapper .submit .button.button-primary:active {
+  /* Button-kleuren bij active aanpassen */
   border-color: #31a572;
   -webkit-box-shadow: inset 0 2px 0 #31a572;
   box-shadow: inset 0 2px 0 #31a572;
 }
 
-#wp-version-message {
+input[type="checkbox"]:checked::before {
+  /* Geeft een kleur aan vinkjes in checkboxes */
+  color: #37b79f !important;
+}
+
+#wp-version-message, .footer-thankyou {
+  /* WordPress meldingen verbergen */
   display: none;
 }
 
 .wrap .frash-notice.notice {
-    display: none !important;
+  /* WP Smush meldingen verbergen */
+  display: none !important;
+}
+
+.CodeMirror.cm-s-default {
+  /* CodeMirror: randje om textarea */
+    border: 1px #DFDFDF solid;
 }
