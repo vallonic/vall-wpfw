@@ -118,6 +118,11 @@ input[type="checkbox"]:checked::before {
     border: 1px #DFDFDF solid;
 }
 
+.CodeMirror.cm-s-default {
+  /* Grootte */
+  width: 100% !important;
+}
+
 #wp-admin-bar-wp-logo {
   /* Logo van WP verbergen in dashboard toolbar */
   display: none;
