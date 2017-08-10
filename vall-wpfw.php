@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Vallonic WordPress Framework
-Description: Maakt het leven van Vallonians makkelijker
-Version:     v0.0.7
+Description: Maakt het leven van Vallonians makkelijker.
+Version:     v1.0.0
 Author:      Vallonic
 Author URI:  http://www.vallonic.com
 Text Domain: vall-wpfw
@@ -19,7 +19,8 @@ if (is_admin()) {
 // Updater class inladen
 require_once( 'inc/classes/updater.php' );
 if ( is_admin() ) {
-    new VallonicWPFWGitHubPluginUpdater( __FILE__, 'vallonic', "vall-wpfw" );
+  $pluginfile = plugin_dir_path( __FILE__ );
+  new VallonicWPFWGitHubPluginUpdater( __FILE__, 'vallonic', "vall-wpfw", 'iD32_v5v897Qb8skTzEa' );
 }
 
 // Taalbestanden
