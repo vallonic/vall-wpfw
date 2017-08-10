@@ -20,14 +20,14 @@ class VallonicWPFWGitHubPluginUpdater {
      * @param  string $accessToken
      * @return null
      */
-    function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' )
+    function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = 'tsesgLBUETsvc3BmxWZB' )
     {
         add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransitent" ) );
         add_filter( "plugins_api", array( $this, "setPluginInfo" ), 10, 3 );
         add_filter( "upgrader_pre_install", array( $this, "preInstall" ), 10, 3 );
         add_filter( "upgrader_post_install", array( $this, "postInstall" ), 10, 3 );
 
-        $this->pluginFile 	= $pluginFile;
+        $this->pluginFile = $pluginFile;
         $this->username 	= $gitHubUsername;
         $this->repo 		= $gitHubProjectName;
         $this->accessToken 	= $accessToken;
@@ -58,11 +58,13 @@ class VallonicWPFWGitHubPluginUpdater {
 		}
 
 		// Query the GitHub API
-		$url = "https://api.github.com/repos/{$this->username}/{$this->repo}/releases";
+  	 //$url = "https://api.github.com/repos/{$this->username}/{$this->repo}/releases";
+    $url = "https://gitlab.com/api/v4/projects/3892495/repository/tags";
+    $accessToken = "tsesgLBUETsvc3BmxWZB";
 
 		if ( ! empty( $this->accessToken ) )
 		{
-		    $url = add_query_arg( array( "access_token" => $this->accessToken ), $url );
+		    $url = "https://gitlab.com/api/v4/projects/3892495/repository/tags?private_token=" . $accessToken;
 		}
 
 		// Get the results
@@ -70,14 +72,18 @@ class VallonicWPFWGitHubPluginUpdater {
 
 		if ( ! empty( $this->githubAPIResult ) )
 		{
-		    $this->githubAPIResult = @json_decode( $this->githubAPIResult );
+		    $this->githubAPIResult = @json_decode( $this->githubAPIResult, true);
 		}
 
 		// Use only the latest release
 		if ( is_array( $this->githubAPIResult ) )
 		{
 		    $this->githubAPIResult = $this->githubAPIResult[0];
-		}
+
+  	}
+
+    // echo "<b>versie: " . $this->githubAPIResult['name'] . "</b>";
+
     }
 
     /**
@@ -97,23 +103,26 @@ class VallonicWPFWGitHubPluginUpdater {
 		$this->initPluginData();
 		$this->getRepoReleaseInfo();
 
-		$doUpdate = version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
+		$doUpdate = version_compare( $this->githubAPIResult['name'], $transient->checked[$this->slug] );
 
 		if ( $doUpdate )
 		{
-			$package = $this->githubAPIResult->zipball_url;
+			//$package = $this->githubAPIResult->zipball_url;
+      $package = "https://gitlab.com/api/v3/projects/3892495/repository/archive.zip?sha=" . $this->githubAPIResult['name'];
 
-			if ( ! empty( $this->accessToken ) )
+			/*if ( ! empty( $this->accessToken ) )
 			{
 			    $package = add_query_arg( array( "access_token" => $this->accessToken ), $package );
-			}
+			}*/
 
 			// Plugin object
 			$obj = new stdClass();
 			$obj->slug = $this->slug;
-			$obj->new_version = $this->githubAPIResult->tag_name;
+			$obj->new_version = $this->githubAPIResult['name'];
 			$obj->url = $this->pluginData["PluginURI"];
 			$obj->package = $package;
+
+
 
 			$transient->response[$this->slug] = $obj;
 		}
@@ -140,40 +149,42 @@ class VallonicWPFWGitHubPluginUpdater {
 		}
 
 		// Add our plugin information
-		$response->last_updated = $this->githubAPIResult->published_at;
+		$response->last_updated = $this->githubAPIResult['commit']['authored_date'];
 		$response->slug = $this->slug;
 		$response->plugin_name  = $this->pluginData["Name"];
-		$response->version = $this->githubAPIResult->tag_name;
+		$response->version = $this->githubAPIResult['name'];
 		$response->author = $this->pluginData["AuthorName"];
 		$response->homepage = $this->pluginData["PluginURI"];
 
 		// This is our release download zip file
-		$downloadLink = $this->githubAPIResult->zipball_url;
+		//$downloadLink = $this->githubAPIResult->zipball_url;
+    $downloadLink = "https://gitlab.com/api/v3/projects/3892495/repository/archive.zip?sha=" . $this->githubAPIResult['name'];
 
-		if ( !empty( $this->accessToken ) )
+
+		/*if ( !empty( $this->accessToken ) )
 		{
 		    $downloadLink = add_query_arg(
 		        array( "access_token" => $this->accessToken ),
 		        $downloadLink
 		    );
-		}
+		}*/
 
 		$response->download_link = $downloadLink;
 
 		// Load Parsedown
-		require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parsedown.php';
+		require_once __DIR__ . DIRECTORY_SEPARATOR . 'parsedown.updater.php';
 
 		// Create tabs in the lightbox
 		$response->sections = array(
 			'Description' 	=> $this->pluginData["Description"],
 			'changelog' 	=> class_exists( "Parsedown" )
-				? Parsedown::instance()->parse( $this->githubAPIResult->body )
-				: $this->githubAPIResult->body
+				? Parsedown::instance()->parse( $this->githubAPIResult['message'] )
+				: $this->githubAPIResult['message']
 		);
 
 		// Gets the required version of WP if available
 		$matches = null;
-		preg_match( "/requires:\s([\d\.]+)/i", $this->githubAPIResult->body, $matches );
+		preg_match( "/requires:\s([\d\.]+)/i", $this->githubAPIResult['message'], $matches );
 		if ( ! empty( $matches ) ) {
 		    if ( is_array( $matches ) ) {
 		        if ( count( $matches ) > 1 ) {
@@ -184,7 +195,7 @@ class VallonicWPFWGitHubPluginUpdater {
 
 		// Gets the tested version of WP if available
 		$matches = null;
-		preg_match( "/tested:\s([\d\.]+)/i", $this->githubAPIResult->body, $matches );
+		preg_match( "/tested:\s([\d\.]+)/i", $this->githubAPIResult['message'], $matches );
 		if ( ! empty( $matches ) ) {
 		    if ( is_array( $matches ) ) {
 		        if ( count( $matches ) > 1 ) {

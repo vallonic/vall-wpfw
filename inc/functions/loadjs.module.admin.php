@@ -26,6 +26,7 @@ function vall_wpfw_loadCodeMirror() {
                 lineNumbers: true,
                 mode: "php",
                 extraKeys: {"Ctrl-Space": "autocomplete"}
+
             }
             CodeMirror.fromTextArea(this, cmOptions);
         });
